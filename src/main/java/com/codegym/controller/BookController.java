@@ -94,14 +94,15 @@ public class BookController {
         return "redirect:books";
     }
     @GetMapping("/searchByCategory")
-    public ModelAndView searchBookBYCategory(@RequestParam("search") Long categoryId, Pageable pageable){
+    public ModelAndView searchBookByCategory(@RequestParam("search") Long categoryId, Pageable pageable) {
         Page<Book> books;
-        if(categoryId == -1){
+        if (categoryId == -1) {
             books = bookService.findAll(pageable);
-        }else {
+        } else {
             Category category = categoryService.findById(categoryId);
-            books = (Page<Book>) bookService.findAllByCategory(category , pageable);
+            books = bookService.findAllByCategory(category,pageable);
         }
+
         ModelAndView modelAndView = new ModelAndView("/book/list");
         modelAndView.addObject("books", books);
         modelAndView.addObject("search", categoryId);
@@ -115,18 +116,17 @@ public class BookController {
     }
     @GetMapping("/searchbyCategory/{id}")
     public ModelAndView searchBookByCategoryCss(@PathVariable("id") Long id, Pageable pageable){
-        Page<Book> books;
+        Page <Book> books;
         if(id == -1){
             books = bookService.findAll(pageable);
         }else {
             Category category = categoryService.findById(id);
-            books = (Page<Book>) bookService.findAllByCategory(category , pageable);
+            books = bookService.findAllByCategory(category , pageable);
         }
         ModelAndView modelAndView = new ModelAndView("/book/list");
         modelAndView.addObject("books", books);
         modelAndView.addObject("search", id);
         return modelAndView;
-
     }
 
 

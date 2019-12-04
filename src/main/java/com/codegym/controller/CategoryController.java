@@ -5,6 +5,8 @@ import com.codegym.model.Book;
 import com.codegym.service.CategoryService;
 import com.codegym.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -79,13 +81,17 @@ public class CategoryController {
         return "redirect:categories";
     }
     @GetMapping("/view-category/{id}")
-    public ModelAndView viewCategory(@PathVariable Long id){
+    public ModelAndView viewCategory(@PathVariable Long id , Pageable pageable){
         Category category = categoryService.findById(id);
-        Iterable<Book> phones = bookService.findAllByCategory(category, pageable);
+        if(category != null){
+            ModelAndView modelAndView =new ModelAndView("/category/view");
+            modelAndView.addObject("category", category);
+            return  modelAndView;
 
-        ModelAndView modelAndView = new ModelAndView("/category/view");
-        modelAndView.addObject("phones", phones);
-        return modelAndView;
+        }else {
+            ModelAndView modelAndView = new ModelAndView("/error.404");
+            return modelAndView;
+        }
     }
 
 }

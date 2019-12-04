@@ -2,12 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Create Phone</title>
+    <title>Create Book</title>
 </head>
 <body>
-<h1>Create book</h1>
+<h1>Create Book</h1>
 <p>
-    <a href="/books">Phone list</a>
+    <a href="/books">Books list</a>
 </p>
 <th:block th:if="${message}">
     <p th:text="${message}"></p>
@@ -19,7 +19,7 @@
             <td><input type="text" th:field="*{name}"/></td>
         </tr>
         <tr>
-            <td>DateOfPurchase:</td>
+            <td>Date Of Purchase:</td>
             <td><input type="date" th:field="*{dateOfPurchase}"/></td>
         </tr>
         <tr>
@@ -27,20 +27,16 @@
             <td><input type="number" th:field="*{price}"/></td>
         </tr>
         <tr>
-            <td>Description</td>
-            <td><input type="text" th:field="*{description}"/></td>
-        </tr>
-        <tr>
             <td>Category:</td>
             <td>
                 <select th:field="*{category}">
-                    <option th:each="p : ${categories}" th:value="${p.id}" th:text="${p.name}"></option>
+                    <option th:each="category : ${categories}" th:text="${category.name}" th:value="${category.id}"></option>
                 </select>
             </td>
         </tr>
         <tr>
             <td></td>
-            <td><input type="submit" value="Create book"></td>
+            <td><input type="submit" value="Create book"/></td>
         </tr>
     </table>
 </form>
